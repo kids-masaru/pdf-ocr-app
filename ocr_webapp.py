@@ -1,6 +1,8 @@
 import os
 import fitz
 import pytesseract
+os.environ["OPENCV_IO_ENABLE_OPENEXR"] = "1"
+os.environ["OPENCV_LOG_LEVEL"] = "ERROR"
 import cv2
 import numpy as np
 from PIL import Image
