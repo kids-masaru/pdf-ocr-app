@@ -22,7 +22,7 @@ import streamlit as st
 # TESSDATA_PATH = r"C:\Program Files\Tesseract-OCR\tessdata"
 
 # 修正後（Linux用パス設定）
-os.environ["TESSDATA_PREFIX"] = "/usr/share/tesseract-ocr/4.0/tessdata/"
+os.environ["TESSDATA_PREFIX"] = "/usr/share/tesseract-ocr/5.3.3/tessdata/"
 pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
 
 # 日本語設定の追加（既存のOCR設定部分）
