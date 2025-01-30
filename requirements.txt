@@ -4,5 +4,3 @@ pymupdf==1.24.3
 opencv-python-headless==4.9.0.80
 numpy==1.26.4
 pillow==10.2.0
-tesseract-ocr
-tesseract-ocr-jpn  # 日本語データ追加
