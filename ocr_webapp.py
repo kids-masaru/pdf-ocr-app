@@ -13,11 +13,15 @@ import streamlit as st
 # os.environ["TESSDATA_PREFIX"] = TESSDATA_PATH
 # pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
 
-# Tesseractの設定
-TESSERACT_PATH = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-TESSDATA_PATH = r"C:\Program Files\Tesseract-OCR\tessdata"
-os.environ["TESSDATA_PREFIX"] = TESSDATA_PATH
-pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
+# ファイル: ocr_webapp.py の該当部分を以下のように修正
+
+# 修正前（コメントアウトする）
+# TESSERACT_PATH = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+# TESSDATA_PATH = r"C:\Program Files\Tesseract-OCR\tessdata"
+
+# 修正後（Linux用パス設定）
+pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
+os.environ["TESSDATA_PREFIX"] = '/usr/share/tesseract-ocr/4.00/tessdata/'
 
 def preprocess_image(img):
     """OCR精度向上のための画像前処理"""
