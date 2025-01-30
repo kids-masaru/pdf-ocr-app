@@ -205,9 +205,9 @@ def main():
         
         # ファイルアップロードのラベル類を非表示にして、CSSでも追加説明を消す
         uploaded_file = st.file_uploader(
-            label="",  # デフォルトのラベルは非表示
+            label="PDFファイルをアップロード",  # 適切なラベルを指定
             type=["pdf"],
-            label_visibility="collapsed",  # ラベルを折りたたむ
+            label_visibility="collapsed",  # ラベルを非表示にする
             help=None  # 既定のヘルプも非表示
         )
         
