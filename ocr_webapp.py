@@ -20,8 +20,18 @@ import streamlit as st
 # TESSDATA_PATH = r"C:\Program Files\Tesseract-OCR\tessdata"
 
 # 修正後（Linux用パス設定）
+os.environ["TESSDATA_PREFIX"] = "/usr/share/tesseract-ocr/4.0/tessdata/"
 pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
-os.environ["TESSDATA_PREFIX"] = '/usr/share/tesseract-ocr/4.00/tessdata/'
+
+# 日本語設定の追加（既存のOCR設定部分）
+def get_ocr_config():
+    return (
+        '--oem 3 '
+        '--psm 6 '
+        '-l jpn+jpn_vert '
+        '--dpi 300 '
+        '-c preserve_interword_spaces=1'
+    )
 
 def preprocess_image(img):
     """OCR精度向上のための画像前処理"""
