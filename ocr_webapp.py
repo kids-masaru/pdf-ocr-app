@@ -20,7 +20,7 @@ import streamlit as st
 # TESSDATA_PATH = r"C:\Program Files\Tesseract-OCR\tessdata"
 
 # 修正後（Linux用パス設定）
-pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
+pytesseract.pytesseract.tesseract_cmd = '/usr/local/bin/tesseract'
 os.environ["TESSDATA_PREFIX"] = '/usr/share/tesseract-ocr/4.00/tessdata/'
 
 
