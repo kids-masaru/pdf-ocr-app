@@ -6,6 +6,14 @@ import numpy as np
 from PIL import Image
 import io
 import streamlit as st
+import sys
+
+# スクリプトの存在を確認
+script_path = "ocr_webapp.py"
+
+if not os.path.exists(script_path):
+    print(f"エラー: '{script_path}' が見つかりません。スクリプトの場所を確認してください。")
+    sys.exit(1)  # プログラムを終了
 
 # Tesseractの設定（適宜ご自身の環境に合わせて設定してください）
 # TESSERACT_PATH = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
