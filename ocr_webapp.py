@@ -7,6 +7,18 @@ from PIL import Image
 import io
 import streamlit as st
 import sys
+import shutil
+import pytesseract
+
+# Tesseract のパスを自動検出
+tesseract_path = shutil.which("tesseract")
+
+if tesseract_path:
+    print(f"Tesseract が見つかりました: {tesseract_path}")
+    pytesseract.pytesseract.tesseract_cmd = tesseract_path
+else:
+    print("エラー: Tesseract が見つかりません。インストールされているか確認してください。")
+    exit(1)
 
 # スクリプトの存在を確認
 script_path = "ocr_webapp.py"
