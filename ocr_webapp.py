@@ -19,7 +19,7 @@ def initialize_tesseract():
     """Tesseractの初期化とバージョン確認を行う"""
     try:
         # 最初のパスを試す
-        pytesseract.pytesseract.tesseract_cmd = '/usr/local/bin/tesseract'
+        pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
         os.environ["TESSDATA_PREFIX"] = '/usr/share/tesseract-ocr/4.00/tessdata/'
         
         # このパスが存在しない場合は代替パスを試す
