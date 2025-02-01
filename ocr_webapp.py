@@ -7,41 +7,48 @@ from PIL import Image
 import io
 import streamlit as st
 import sys
-import shutil
-import pytesseract
+import logging
 
-# Tesseract のパスを自動検出
-tesseract_path = shutil.which("tesseract")
+# ログ設定の追加
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 
-if tesseract_path:
-    print(f"Tesseract が見つかりました: {tesseract_path}")
-    pytesseract.pytesseract.tesseract_cmd = tesseract_path
-else:
-    print("エラー: Tesseract が見つかりません。インストールされているか確認してください。")
-    exit(1)
+def initialize_tesseract():
+    """Tesseractの初期化とバージョン確認を行う"""
+    try:
+        # 最初のパスを試す
+        pytesseract.pytesseract.tesseract_cmd = '/usr/local/bin/tesseract'
+        os.environ["TESSDATA_PREFIX"] = '/usr/share/tesseract-ocr/4.00/tessdata/'
+        
+        # このパスが存在しない場合は代替パスを試す
+        if not os.path.exists(pytesseract.pytesseract.tesseract_cmd):
+            alternate_path = '/usr/local/bin/tesseract'
+            if os.path.exists(alternate_path):
+                pytesseract.pytesseract.tesseract_cmd = alternate_path
+                logging.info(f"Using alternate Tesseract path: {alternate_path}")
+            else:
+                raise FileNotFoundError("Tesseract executable not found in expected locations")
+        
+        # Tesseractのバージョンを確認
+        version = pytesseract.get_tesseract_version()
+        logging.info(f"Tesseract initialized successfully. Version: {version}")
+        return True
+        
+    except Exception as e:
+        logging.error(f"Tesseract initialization error: {str(e)}")
+        st.error("Tesseract OCRの初期化に失敗しました。システム管理者に連絡してください。")
+        return False
 
-# スクリプトの存在を確認
-script_path = "ocr_webapp.py"
+# Tesseractの初期化を実行
+if not initialize_tesseract():
+    st.error("OCRシステムの初期化に失敗しました。アプリケーションを終了します。")
+    st.stop()
 
-if not os.path.exists(script_path):
-    print(f"エラー: '{script_path}' が見つかりません。スクリプトの場所を確認してください。")
-    sys.exit(1)  # プログラムを終了
-
-# Tesseractの設定（適宜ご自身の環境に合わせて設定してください）
-# TESSERACT_PATH = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-# TESSDATA_PATH = r"C:\Program Files\Tesseract-OCR\tessdata"
-# os.environ["TESSDATA_PREFIX"] = TESSDATA_PATH
-# pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
-
-# ファイル: ocr_webapp.py の該当部分を以下のように修正
-
-# 修正前（コメントアウトする）
-# TESSERACT_PATH = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-# TESSDATA_PATH = r"C:\Program Files\Tesseract-OCR\tessdata"
-
-# 修正後（Linux用パス設定）
-pytesseract.pytesseract.tesseract_cmd = '/usr/local/bin/tesseract'
-os.environ["TESSDATA_PREFIX"] = '/usr/share/tesseract-ocr/4.00/tessdata/'
+# システム情報のログ出力
+logging.debug(f"Python version: {sys.version}")
+logging.debug(f"Current working directory: {os.getcwd()}")
 
 
 def preprocess_image(img):
